@@ -38,4 +38,4 @@ if not files:
 
     equity = (1 + filtered_returns).cumprod()
     fig = equity_curve_plot(equity, title=f"{symbol} Low-Volatility Equity Curve")
-    st.plotly_chart(fig, width=True)
+    st.plotly_chart(fig, width="stretch")
