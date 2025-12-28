@@ -1,5 +1,5 @@
 import streamlit as st
-import pandas as pd
+import pandas as pd #NOQA
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv
 from core.engine.indicators import add_simple_returns
@@ -22,39 +22,42 @@ else:
     else:
         symbol = ""
 
-    df = load_single_csv(selected)
-    df = add_simple_returns(df)
-    returns = df["Returns"]
+    if not selected:
+        st.warning("No symbol selected")
+    else:
+        df = load_single_csv(selected)
+        df = add_simple_returns(df)
+        returns = df["Returns"]
 
-    st.sidebar.subheader("Parameter Grid")
+        st.sidebar.subheader("Parameter Grid")
 
-    sma_values = st.sidebar.multiselect("SMA Window", [50, 100, 150, 200], default=[100, 200])
-    vol_q_values = st.sidebar.multiselect("Volatility Quantile", [0.7, 0.8, 0.9], default=[0.8])
+        sma_values = st.sidebar.multiselect("SMA Window", [50, 100, 150, 200], default=[100, 200])
+        vol_q_values = st.sidebar.multiselect("Volatility Quantile", [0.7, 0.8, 0.9], default=[0.8])
 
-    param_grid = {
-        "sma_window": sma_values,
-        "vol_quantile": vol_q_values,
-    }
+        param_grid = {
+            "sma_window": sma_values,
+            "vol_quantile": vol_q_values,
+        }
 
-    def strategy_fn(df, params):
-        from core.engine.regime_filters import apply_trend_regime
-        from core.engine.volatility_filters import apply_volatility_filter
+        def strategy_fn(df, params):
+            from core.engine.regime_filters import apply_trend_regime
+            from core.engine.volatility_filters import apply_volatility_filter
 
-        df = apply_trend_regime(df, window=params["sma_window"])
-        df = apply_volatility_filter(df, quantile=params["vol_quantile"])
-        mask = df["Regime_Uptrend"] & df["Vol_Filter"]
-        return df["Returns"].where(mask, 0).fillna(0)
+            df = apply_trend_regime(df, window=params["sma_window"])
+            df = apply_volatility_filter(df, quantile=params["vol_quantile"])
+            mask = df["Regime_Uptrend"] & df["Vol_Filter"]
+            return df["Returns"].where(mask, 0).fillna(0)
 
-    if st.button("Run Optimization"):
-        results = simple_parameter_sweep(
-            df,
-            param_grid,
-            strategy_fn=strategy_fn,
-            metric_fn=lambda r: compute_basic_metrics(r)
-        )
+        if st.button("Run Optimization"):
+            results = simple_parameter_sweep(
+                df,
+                param_grid,
+                strategy_fn=strategy_fn,
+                metric_fn=lambda r: compute_basic_metrics(r)
+            )
 
-        st.subheader("Optimization Results")
-        st.dataframe(results)
+            st.subheader("Optimization Results")
+            st.dataframe(results)
 
-        best = results.sort_values("CAGR", ascending=False).iloc[0]
-        st.success(f"Best Parameters: {best.to_dict()}")
+            best = results.sort_values("CAGR", ascending=False).iloc[0]
+            st.success(f"Best Parameters: {best.to_dict()}")
