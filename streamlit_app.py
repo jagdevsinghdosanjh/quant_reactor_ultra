@@ -15,14 +15,16 @@ PAGES = {
     'ML Regime Classifier': 'app.ML_Regime_Classifier',
 }
 
-
 st.set_page_config(
-    page_title='Quant Reactor Ultra',
+    page_title="Quant Reactor Ultra",
     page_icon="📊",
-    layout='wide',
+    layout="wide",
 )
 
+st.header("Welcome to Quant Reactor Ultra - Developed by Jagdev Singh Dosanjh")
+
 st.sidebar.title('Navigation')
+    
 choice = st.sidebar.radio('Go to', list(PAGES.keys()))
 
 module_name = PAGES[choice]
