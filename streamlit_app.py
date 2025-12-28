@@ -18,7 +18,7 @@ PAGES = {
 
 st.set_page_config(
     page_title='Quant Reactor Ultra',
-    page_icon='ðŸ“Š',
+    page_icon="📊",
     layout='wide',
 )
 
