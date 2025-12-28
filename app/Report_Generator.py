@@ -15,6 +15,9 @@ if not files:
     st.stop()
 
 selected = st.selectbox("Select Symbol", files)
+if selected is None:
+    st.warning("No file selected")
+    st.stop()
 symbol = selected.split("/")[-1].replace(".csv", "")
 
 df = load_single_csv(selected)

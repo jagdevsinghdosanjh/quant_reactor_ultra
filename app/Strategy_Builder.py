@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv
@@ -15,8 +16,13 @@ files = list_csv_files(data_dir)
 if not files:
     st.warning("No CSV files found in core/data")
     st.stop()
-
 symbol_file = st.selectbox("Select Symbol", files)
+if not symbol_file:
+    st.warning("No symbol selected")
+    st.stop()
+symbol = os.path.basename(symbol_file)
+if symbol.lower().endswith(".csv"):
+    symbol = symbol[:-4]
 symbol = symbol_file.split("/")[-1].replace(".csv", "")
 
 st.sidebar.subheader("Filters")

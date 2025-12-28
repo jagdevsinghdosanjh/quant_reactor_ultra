@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv
 from core.engine.volatility_filters import apply_volatility_filter
@@ -15,12 +16,15 @@ quantile = st.sidebar.slider("Volatility Quantile Threshold", 0.5, 0.95, 0.8)
 
 if not files:
     st.warning("No CSV files found in core/data")
-else:
     selected = st.selectbox("Select Symbol", files)
-    symbol = selected.split("/")[-1].replace(".csv", "")
+    # ensure selected is not None (selectbox may return None in some contexts)
+    selected = selected or files[0]
+    # use os.path to handle different path separators and remove extension safely
+    symbol = os.path.splitext(os.path.basename(selected))[0]
 
     df = load_single_csv(selected)
     df = add_simple_returns(df)
+    df = apply_volatility_filter(df, quantile=quantile)
     df = apply_volatility_filter(df, quantile=quantile)
 
     st.subheader(f"Volatility Filter Applied (Quantile {quantile})")
