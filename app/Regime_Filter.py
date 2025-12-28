@@ -16,24 +16,27 @@ window = st.sidebar.slider("SMA Window", 50, 300, 200)
 if not files:
     st.warning("No CSV files found in core/data")
 else:
-    selected = st.selectbox("Select Symbol", files)
-    symbol = selected.split("/")[-1].replace(".csv", "")
+    selected = st.selectbox("Select Symbol", files, index=0)
+    if not selected:
+        st.warning("No symbol selected")
+    else:
+        symbol = selected.split("/")[-1].replace(".csv", "")
 
-    df = load_single_csv(selected)
-    df = add_simple_returns(df)
-    df = apply_trend_regime(df, window=window)
+        df = load_single_csv(selected)
+        df = add_simple_returns(df)
+        df = apply_trend_regime(df, window=window)
 
-    st.subheader(f"Regime Filter Applied (SMA {window})")
-    st.dataframe(df.tail())
+        st.subheader(f"Regime Filter Applied (SMA {window})")
+        st.dataframe(df.tail())
 
-    # Filter returns
-    filtered_returns = df[df["Regime_Uptrend"]]["Returns"].fillna(0)
-    metrics = compute_basic_metrics(filtered_returns)
+        # Filter returns
+        filtered_returns = df[df["Regime_Uptrend"]]["Returns"].fillna(0)
+        metrics = compute_basic_metrics(filtered_returns)
 
-    st.subheader("Performance During Uptrend Regime")
-    st.json(metrics)
+        st.subheader("Performance During Uptrend Regime")
+        st.json(metrics)
 
-    # Plot
-    equity = (1 + filtered_returns).cumprod()
-    fig = equity_curve_plot(equity, title=f"{symbol} Uptrend Regime Equity Curve")
-    st.plotly_chart(fig, use_container_width=True)
+        # Plot
+        equity = (1 + filtered_returns).cumprod()
+        fig = equity_curve_plot(equity, title=f"{symbol} Uptrend Regime Equity Curve")
+        st.plotly_chart(fig, use_container_width=True)

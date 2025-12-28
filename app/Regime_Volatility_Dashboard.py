@@ -1,5 +1,6 @@
 import streamlit as st
-import pandas as pd
+import pandas as pd #NOQA
+import os
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv
 from core.engine.indicators import add_simple_returns
@@ -10,7 +11,10 @@ from core.utils.plotter import equity_curve_plot
 
 st.title("📊 Regime + Volatility Dashboard")
 
-data_dir = "core/data"
+# Resolve data_dir relative to the repository root (app/ -> project root),
+# so core/data is found regardless of CWD.
+data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "core", "data")
+
 files = list_csv_files(data_dir)
 
 if not files:
@@ -18,6 +22,12 @@ if not files:
     st.stop()
 
 selected = st.selectbox("Select Symbol", files)
+if selected is None:
+    st.warning("No symbol selected")
+    st.stop()
+
+# use os.path to handle different path separators and safely remove the .csv extension
+symbol = os.path.splitext(os.path.basename(selected))[0]
 symbol = selected.split("/")[-1].replace(".csv", "")
 
 col1, col2 = st.sidebar.columns(2)
