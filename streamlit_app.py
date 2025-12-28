@@ -1,10 +1,12 @@
 ﻿import streamlit as st
 import importlib
-
 PAGES = {
     'Home': 'app.Home',
     'Compare Performance': 'app.Compare_Performance',
     'Portfolio Analytics': 'app.Portfolio_Analytics',
+    'Regime Filter': 'app.Regime_Filter',
+    'Volatility Filter': 'app.Volatility_Filter',
+    'Parameter Optimization': 'app.Parameter_Optimizer',
 }
 
 st.set_page_config(
