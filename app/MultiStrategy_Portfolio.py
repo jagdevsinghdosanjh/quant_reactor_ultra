@@ -68,7 +68,7 @@ else:
     equity = (1 + combined).cumprod()
     st.subheader("Combined Strategy Equity Curve")
     fig = equity_curve_plot(equity, title=f"{symbol} – Multi-Strategy Portfolio")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width=True)
 
     df_out = pd.DataFrame({
         "Date": df["Date"],

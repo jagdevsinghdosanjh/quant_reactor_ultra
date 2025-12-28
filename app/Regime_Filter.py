@@ -39,4 +39,4 @@ else:
         # Plot
         equity = (1 + filtered_returns).cumprod()
         fig = equity_curve_plot(equity, title=f"{symbol} Uptrend Regime Equity Curve")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width=True)

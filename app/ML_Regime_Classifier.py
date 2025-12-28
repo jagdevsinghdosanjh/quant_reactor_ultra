@@ -41,4 +41,4 @@ if st.button("Train Model"):
     rets_ml = df_ml["Returns"].where(mask, 0).fillna(0)
     equity_ml = (1 + rets_ml).cumprod()
     fig = equity_curve_plot(equity_ml, title=f"{symbol} – ML Regime Strategy Equity")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width=True)

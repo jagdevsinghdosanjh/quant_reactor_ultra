@@ -27,5 +27,5 @@ else:
     else:
         st.subheader("Portfolio Equity")
         fig = equity_curve_plot(portfolio_df["Portfolio_Equity"], title="Equal-Weight Portfolio Equity")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width=True)
         st.dataframe(portfolio_df.tail())

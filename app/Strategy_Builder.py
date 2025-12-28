@@ -62,4 +62,4 @@ st.json(metrics)
 
 st.subheader("Equity Curve")
 fig = equity_curve_plot(equity, title=f"{symbol} – Custom Strategy Equity")
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width=True)
