@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from pathlib import Path
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv
 from core.engine.indicators import add_simple_returns
@@ -8,7 +9,6 @@ from core.engine.volatility_filters import apply_volatility_filter
 from core.utils.plotter import equity_curve_plot
 
 st.title("💼 Multi-Strategy Portfolio Optimizer")
-
 data_dir = "core/data"
 files = list_csv_files(data_dir)
 
@@ -17,6 +17,11 @@ if not files:
     st.stop()
 
 selected = st.selectbox("Select Symbol", files)
+if selected is None:
+    st.warning("No symbol selected.")
+    st.stop()
+# use pathlib to safely get the filename without extension
+symbol = Path(selected).stem
 symbol = selected.split("/")[-1].replace(".csv", "")
 
 df = load_single_csv(selected)

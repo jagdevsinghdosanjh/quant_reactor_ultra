@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv
 from core.engine.indicators import add_simple_returns
@@ -15,7 +16,11 @@ if not files:
     st.stop()
 
 selected = st.selectbox("Select Symbol", files)
-symbol = selected.split("/")[-1].replace(".csv", "")
+if selected is None:
+    st.error("No file selected")
+    st.stop()
+selected_str = str(selected)
+symbol = os.path.splitext(os.path.basename(selected_str))[0]
 
 df = load_single_csv(selected)
 df = add_simple_returns(df)

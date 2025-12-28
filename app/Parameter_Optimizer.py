@@ -15,7 +15,12 @@ if not files:
     st.warning("No CSV files found in core/data")
 else:
     selected = st.selectbox("Select Symbol", files)
-    symbol = selected.split("/")[-1].replace(".csv", "")
+    # Guard against selected being None and use os.path.basename for cross-platform paths
+    if selected:
+        import os
+        symbol = os.path.basename(selected).replace(".csv", "")
+    else:
+        symbol = ""
 
     df = load_single_csv(selected)
     df = add_simple_returns(df)
