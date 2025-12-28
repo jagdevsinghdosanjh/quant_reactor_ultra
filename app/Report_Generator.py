@@ -1,0 +1,36 @@
+import streamlit as st
+from core.utils.helpers import list_csv_files
+from core.engine.loader import load_single_csv
+from core.engine.indicators import add_simple_returns
+from core.engine.metrics import compute_basic_metrics
+from core.engine.reporting import generate_pdf_report
+
+st.title("📄 PDF Report Generator")
+
+data_dir = "core/data"
+files = list_csv_files(data_dir)
+
+if not files:
+    st.warning("No CSV files found in core/data")
+    st.stop()
+
+selected = st.selectbox("Select Symbol", files)
+symbol = selected.split("/")[-1].replace(".csv", "")
+
+df = load_single_csv(selected)
+df = add_simple_returns(df)
+metrics = compute_basic_metrics(df["Returns"])
+
+st.subheader("Preview Metrics")
+st.json(metrics)
+
+if st.button("Generate PDF Report"):
+    path = generate_pdf_report(symbol, df, metrics, output_dir="assets")
+    st.success(f"Report generated: {path}")
+    with open(path, "rb") as f:
+        st.download_button(
+            label="Download PDF",
+            data=f,
+            file_name=path.split("/")[-1],
+            mime="application/pdf",
+        )
