@@ -1,5 +1,5 @@
 ﻿import logging
-from pathlib import Path
+from pathlib import Path #NOQA
 
 def get_logger(name: str = "quant_reactor_ultra"):
     logger = logging.getLogger(name)
