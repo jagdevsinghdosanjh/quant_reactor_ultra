@@ -1,4 +1,6 @@
-﻿import pandas as pd
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/loader.py
+import pandas as pd
 from pathlib import Path
 from typing import Dict
 from core.utils.logger import LOG

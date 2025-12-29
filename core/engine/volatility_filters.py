@@ -1,5 +1,7 @@
-﻿import pandas as pd
-from .indicators import add_volatility
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/volatility_filters.py
+import pandas as pd
+from indicators import add_volatility
 
 def apply_volatility_filter(df: pd.DataFrame, quantile: float = 0.8) -> pd.DataFrame:
     df = add_volatility(df)

@@ -1,3 +1,5 @@
+#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/ml_regime.py
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split

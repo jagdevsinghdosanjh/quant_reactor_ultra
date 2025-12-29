@@ -1,4 +1,6 @@
-﻿import pandas as pd
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/portfolio.py
+import pandas as pd
 
 def build_equal_weight_portfolio(returns_dict: dict) -> pd.DataFrame:
     if not returns_dict:

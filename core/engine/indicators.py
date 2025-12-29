@@ -1,4 +1,5 @@
-﻿#Quant_
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/indicators.py
 import pandas as pd
 
 def add_simple_returns(df: pd.DataFrame) -> pd.DataFrame:

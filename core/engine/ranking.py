@@ -1,4 +1,7 @@
-﻿import pandas as pd
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/ranking.py
+
+import pandas as pd
 
 def build_ranking_table(metrics_dict: dict) -> pd.DataFrame:
     if not metrics_dict:

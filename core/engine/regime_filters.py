@@ -1,4 +1,6 @@
-﻿import pandas as pd
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/refime_filters.py
+import pandas as pd
 from .indicators import add_sma
 
 def apply_trend_regime(df: pd.DataFrame, window: int = 200) -> pd.DataFrame:

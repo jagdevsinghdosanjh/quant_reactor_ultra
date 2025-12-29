@@ -1,4 +1,6 @@
-﻿import pandas as pd
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#core/engine/optimizer.py
+import pandas as pd
 from typing import Dict, Callable
 
 def simple_parameter_sweep(
