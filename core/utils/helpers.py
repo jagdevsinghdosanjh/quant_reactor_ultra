@@ -1,5 +1,5 @@
 ﻿from pathlib import Path
-from typing import List
+from typing import List #noqa
 
 def list_csv_files(data_dir: str) -> list:
     p = Path(data_dir)
