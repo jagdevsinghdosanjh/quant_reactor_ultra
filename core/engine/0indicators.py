@@ -8,13 +8,6 @@ def add_simple_returns(df: pd.DataFrame) -> pd.DataFrame:
     df["Returns"] = df[close_col].pct_change().fillna(0.0)
     return df
 
-
-# def add_simple_returns(df: pd.DataFrame) -> pd.DataFrame:
-#     df = df.copy()
-#     close_col = "Close" if "Close" in df.columns else df.columns[-1]
-#     df["Returns"] = df[close_col].pct_change().fillna(0.0)
-#     return df
-
 def add_sma(df: pd.DataFrame, window: int = 200, col: str = "Close") -> pd.DataFrame:
     df = df.copy()
     col = col if col in df.columns else df.columns[-1]
