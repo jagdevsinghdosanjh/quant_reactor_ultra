@@ -1,7 +1,7 @@
 ﻿import streamlit as st
-import pandas as pd
+import pandas as pd #noqa
 from core.utils.helpers import list_csv_files
-from core.utils.logger import LOG
+from core.utils.logger import LOG #noqa
 from core.engine.loader import load_single_csv
 from core.engine.indicators import add_simple_returns
 from core.engine.metrics import compute_basic_metrics
