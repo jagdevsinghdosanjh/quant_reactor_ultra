@@ -15,6 +15,8 @@ PAGES = {
     'ML Regime Classifier': 'app.ML_Regime_Classifier',
 }
 
+ 
+
 st.set_page_config(
     page_title="Quant Reactor Ultra",
     page_icon="📊",
