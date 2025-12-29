@@ -1,4 +1,6 @@
-﻿import logging
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#utils/loggers.py
+import logging
 from pathlib import Path #NOQA
 
 def get_logger(name: str = "quant_reactor_ultra"):

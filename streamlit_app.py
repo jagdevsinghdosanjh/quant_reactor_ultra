@@ -1,4 +1,6 @@
-﻿import streamlit as st
+﻿#Under root of Project Directory
+#streamlit_app.py
+import streamlit as st
 import importlib
 
 PAGES = {
