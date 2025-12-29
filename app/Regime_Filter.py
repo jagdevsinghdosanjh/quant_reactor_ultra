@@ -1,3 +1,5 @@
+#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#app/Regime_Filter.py
 import streamlit as st
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv

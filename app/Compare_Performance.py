@@ -1,4 +1,6 @@
-﻿import streamlit as st
+﻿#Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
+#app/Compare_Performance.py
+import streamlit as st
 import pandas as pd #noqa
 from core.utils.helpers import list_csv_files
 from core.utils.logger import LOG #noqa

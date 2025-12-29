@@ -1,4 +1,5 @@
-﻿import pandas as pd
+﻿#Quant_
+import pandas as pd
 
 def add_simple_returns(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
