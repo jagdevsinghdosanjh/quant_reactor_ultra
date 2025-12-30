@@ -9,7 +9,7 @@ from core.engine.indicators import add_simple_returns
 from core.engine.metrics import compute_basic_metrics
 from core.utils.plotter import equity_curve_plot
 
-st.title("Regime Filter Analysis")
+st.title("📉 Regime Filter Analysis")
 
 # Use absolute path
 data_dir = Path("core/data").resolve()
