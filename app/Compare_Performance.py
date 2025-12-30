@@ -15,7 +15,7 @@ data_dir = "core/data"
 files = list_csv_files(data_dir)
 
 if not files:
-    st.warning(f"No CSV files found in {data_dir}. Place your 14 CSVs there.")
+    st.warning(f"No CSV files found in {data_dir}. Place your CSV Files there.")
 else:
     metrics_dict = {}
     for f in files:
