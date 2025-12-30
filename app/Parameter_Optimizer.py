@@ -12,9 +12,16 @@ from core.engine.optimizer import simple_parameter_sweep
 from core.utils.plotter import equity_curve_plot
 
 
+# def example_strategy_fn(df: pd.DataFrame, params: dict) -> pd.Series:
+#     """Example strategy: SMA crossover using window from params."""
+#     window = int(params["window"])
+#     sma = df["Close"].rolling(window).mean()
+#     returns = df["Returns"] * (df["Close"] > sma).shift(1).fillna(False)
+#     return returns
+
 def example_strategy_fn(df: pd.DataFrame, params: dict) -> pd.Series:
     """Example strategy: SMA crossover using window from params."""
-    window = params["window"]
+    window = int(params["window"])   # FIXED
     sma = df["Close"].rolling(window).mean()
     returns = df["Returns"] * (df["Close"] > sma).shift(1).fillna(False)
     return returns
@@ -59,6 +66,7 @@ def main():
     # Plot best equity curve
     best_row = results.sort_values("Total Return", ascending=False).iloc[0]
     best_window = best_row["window"]
+    best_window = int(best_window)
 
     st.success(f"Best window: {best_window}")
 
