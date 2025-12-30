@@ -35,7 +35,7 @@ def main():
             portfolio_df["Portfolio_Equity"],
             title="Equal-Weight Portfolio Equity"
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         st.dataframe(portfolio_df.tail())
 
 
