@@ -1,7 +1,7 @@
 #Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
 #app/Regime_Volatility_Dashboard.py
 import streamlit as st
-import pandas as pd #NOQA
+import pandas as pd #noqa
 import os
 from core.utils.helpers import list_csv_files
 from core.engine.loader import load_single_csv
