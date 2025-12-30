@@ -2,7 +2,7 @@
 #app/Home.py
 import streamlit as st
 
-st.title("Quant Reactor Ultra")
+st.title("Welcome to Quant Reactor Ultra")
 st.markdown(
     '''
     Welcome to **Quant Reactor Ultra**  your modular lab for:
