@@ -10,7 +10,6 @@ from core.engine.indicators import add_simple_returns
 from core.engine.metrics import compute_basic_metrics
 from core.utils.plotter import equity_curve_plot
 
-
 def main():
     st.title("🌪️ Volatility Filter Analysis")
 
