@@ -2,7 +2,7 @@
 #core/engine/metrics.py
 
 import pandas as pd
-import numpy as np
+import numpy as np #noqa
 
 def compute_basic_metrics(returns: pd.Series) -> dict:
     returns = returns.dropna()
