@@ -20,7 +20,7 @@ PAGES = {
  
 
 st.set_page_config(
-    page_title="Quant Reactor Ultra",
+    page_title="Welcome to Quant Reactor Ultra",
     page_icon="📊",
     layout="wide",
 )
@@ -33,3 +33,5 @@ choice = st.sidebar.radio('Go to', list(PAGES.keys()))
 
 module_name = PAGES[choice]
 module = importlib.import_module(module_name)
+module.main()
+
