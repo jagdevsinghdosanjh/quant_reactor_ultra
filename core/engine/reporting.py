@@ -1,10 +1,13 @@
 #Quant_Reactor_Ultra (VS Code Project using Python and streamlit)
 #core/engine/reporting.py
+
+# core/engine/reporting.py
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
+
 
 def generate_pdf_report(
     symbol: str,
@@ -12,31 +15,95 @@ def generate_pdf_report(
     metrics: dict,
     output_dir: str = "assets"
 ) -> str:
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+    # Ensure output directory exists
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Clean timestamped filename
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"Report_{symbol}_{timestamp}.pdf"
-    out_path = str(Path(output_dir) / filename)
+    out_path = output_dir / filename
+
+    # Ensure Date column is datetime
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 
     with PdfPages(out_path) as pdf:
-        # Page 1: Title & metrics
+
+        # -------------------------
+        # PAGE 1 — Title + Metrics
+        # -------------------------
         fig, ax = plt.subplots(figsize=(8.27, 11.69))  # A4 portrait
         ax.axis("off")
+
         text = f"Quant Reactor Ultra Report\n\nSymbol: {symbol}\n\nMetrics:\n"
+
         for k, v in metrics.items():
-            text += f"- {k}: {v:.4f}\n"
+            try:
+                text += f"- {k}: {float(v):.4f}\n"
+            except:
+                text += f"- {k}: {v}\n"
+
         ax.text(0.05, 0.95, text, va="top", fontsize=10)
         pdf.savefig(fig)
         plt.close(fig)
 
-        # Page 2: Equity curve
-        if "Returns" in df.columns:
-            equity = (1 + df["Returns"].fillna(0)).cumprod()
+        # -------------------------
+        # PAGE 2 — Equity Curve
+        # -------------------------
+        if "Returns" in df.columns and "Date" in df.columns:
+            plot_df = df.dropna(subset=["Date"])
+            equity = (1 + plot_df["Returns"].fillna(0)).cumprod()
+
             fig, ax = plt.subplots(figsize=(8.27, 11.69))
-            ax.plot(df["Date"], equity)
+            ax.plot(plot_df["Date"], equity)
             ax.set_title(f"{symbol} – Equity Curve")
             ax.set_xlabel("Date")
             ax.set_ylabel("Equity")
             pdf.savefig(fig)
             plt.close(fig)
 
-    return out_path
+    return str(out_path)
+
+
+# import matplotlib.pyplot as plt
+# from matplotlib.backends.backend_pdf import PdfPages
+# import pandas as pd
+# from pathlib import Path
+# from datetime import datetime
+
+# def generate_pdf_report(
+#     symbol: str,
+#     df: pd.DataFrame,
+#     metrics: dict,
+#     output_dir: str = "assets"
+# ) -> str:
+#     Path(output_dir).mkdir(parents=True, exist_ok=True)
+#     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+#     filename = f"Report_{symbol}_{timestamp}.pdf"
+#     out_path = str(Path(output_dir) / filename)
+
+#     with PdfPages(out_path) as pdf:
+#         # Page 1: Title & metrics
+#         fig, ax = plt.subplots(figsize=(8.27, 11.69))  # A4 portrait
+#         ax.axis("off")
+#         text = f"Quant Reactor Ultra Report\n\nSymbol: {symbol}\n\nMetrics:\n"
+#         for k, v in metrics.items():
+#             text += f"- {k}: {v:.4f}\n"
+#         ax.text(0.05, 0.95, text, va="top", fontsize=10)
+#         pdf.savefig(fig)
+#         plt.close(fig)
+
+#         # Page 2: Equity curve
+#         if "Returns" in df.columns:
+#             equity = (1 + df["Returns"].fillna(0)).cumprod()
+#             fig, ax = plt.subplots(figsize=(8.27, 11.69))
+#             ax.plot(df["Date"], equity)
+#             ax.set_title(f"{symbol} – Equity Curve")
+#             ax.set_xlabel("Date")
+#             ax.set_ylabel("Equity")
+#             pdf.savefig(fig)
+#             plt.close(fig)
+
+#     return out_path
